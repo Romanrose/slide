@@ -43,7 +43,7 @@ const fonts = {
 
 const PAD_X = 128;
 const PAD_Y = 104;
-const TOTAL = 13;
+const TOTAL = 15;
 
 const fill = {
   width: '100%',
@@ -690,8 +690,115 @@ const CurrentBase: Page = () => (
   </PageShell>
 );
 
+const ScriptOverview: Page = () => (
+  <PageShell page={5} section="Script">
+    <Eyebrow>Full script</Eyebrow>
+    <Title>剧本结构</Title>
+    <Rule />
+    <div style={{ display: 'grid', gap: 26 }}>
+      {[
+        ['01', '客厅 · 夜', '乔被战争新闻惊醒，创伤闪回触发。左臂疤痕、痉挛、喘息、电视蓝光。'],
+        ['02', '战争废墟 · 黄昏', '约翰救助受伤的乔，被流弹击中牺牲。乔从约翰口袋中找到刻有白鸽痕迹的打火机。'],
+        ['03', '树下 · 日', '乔和约翰在橄榄树下休息、开玩笑、共享打火机。白鸽飞过两人头顶。'],
+        ['04', '客厅 · 夜', '乔关掉电视，点燃香烟。窗外白鸽驻足窗台，烟雾中片刻平静。'],
+      ].map(([num, title, desc]) => (
+        <div
+          key={num}
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '80px 340px 1fr',
+            gap: 24,
+            alignItems: 'start',
+            padding: '22px 28px',
+            border: `1px solid ${palette.line}`,
+            background: palette.surface,
+            borderRadius: 8,
+          }}
+        >
+          <div style={{ fontFamily: fonts.mono, fontSize: 52, color: palette.accent, lineHeight: 1 }}>
+            {num}
+          </div>
+          <div>
+            <div style={{ fontFamily: fonts.serif, fontSize: 36, fontWeight: 400 }}>{title}</div>
+          </div>
+          <div style={{ fontSize: 26, lineHeight: 1.45, color: palette.muted, paddingTop: 6 }}>
+            {desc}
+          </div>
+        </div>
+      ))}
+    </div>
+  </PageShell>
+);
+
+const StoryboardView: Page = () => (
+  <PageShell page={6} section="Storyboard">
+    <Eyebrow>Shot breakdown</Eyebrow>
+    <Title>分镜头设计</Title>
+    <Rule />
+    <div style={{ height: 540, overflow: 'auto' }}>
+      <table
+        style={{
+          width: '100%',
+          borderCollapse: 'collapse',
+          fontSize: 21,
+          lineHeight: 1.3,
+        }}
+      >
+        <thead>
+          <tr style={{ background: palette.text, color: palette.bg }}>
+            {['镜号', '景别', '角度', '运动', '画面内容', '声音'].map((h) => (
+              <th key={h} style={{ padding: '12px 14px', textAlign: 'left', fontWeight: 600 }}>
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {[
+            ['01', '中', '背，平', '固定', '沙发正对电视，CNN战争新闻', '新闻背景音'],
+            ['02', '近', '斜侧，平', '摇', '桌上酒瓶烟蒂，乔臂上疤痕', '新闻背景音'],
+            ['03a', '特', '正，俯', '固定', '乔惊醒，瞳孔放大，喘粗气', '炮火声+喘气'],
+            ['01a', '特', '正，俯', '固定', '乔背靠掩体，头下垂', '炮火声'],
+            ['02', '中', '斜侧，平', '固定', '约翰快步走来，半蹲包扎', '战场声+脚步声'],
+            ['04', '中', '斜侧，平', '固定', '约翰中弹，扑倒在乔身上', '子弹声+哭声'],
+            ['06', '特', '略仰', '过肩固定', '约翰遗言："保护好你自己"', '乔的哭声'],
+            ['08', '特', '略俯', '过肩固定', '乔掏出打火机，刻有白鸽痕迹', '摩擦声'],
+            ['02', '中', '正，平', '固定', '约翰递来打火机，乔端详', '聊天底噪+鸟叫'],
+            ['04', '近', '斜侧', '固定', '乔接过打火机，举向天空', '点烟声'],
+            ['06', '—', '—', '固定', '白鸽飞过两人头顶', '白鸽咕咕叫'],
+            ['02', '近', '斜侧，平', '固定', '乔摸出打火机，摩挲刻痕', '手指摩擦声'],
+            ['04', '—', '—', '固定', '白鸽在地板行走，停驻看镜头', '白鸽咕咕叫'],
+          ].map(([shot, size, angle, move, content, sound], i) => (
+            <tr
+              key={shot + String(i)}
+              style={{
+                borderBottom: `1px solid ${palette.line}`,
+                background: i % 2 === 0 ? 'transparent' : 'rgba(216, 206, 189, 0.25)',
+              }}
+            >
+              {[shot, size, angle, move, content, sound].map((val, j) => (
+                <td
+                  key={j}
+                  style={{
+                    padding: '10px 14px',
+                    fontFamily: j === 0 ? fonts.mono : j === 4 ? fonts.serif : 'inherit',
+                    color: j === 0 ? palette.accent : palette.text,
+                    fontSize: j === 4 ? 19 : 21,
+                  }}
+                >
+                  {val}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </PageShell>
+);
+
 const FiveMinutes: Page = () => (
-  <PageShell page={5} section="Expansion">
+  <PageShell page={7} section="Expansion">
     <Eyebrow>Five-minute cut</Eyebrow>
     <Title>情绪层次设计</Title>
     <Rule />
@@ -729,7 +836,7 @@ const FiveMinutes: Page = () => (
 );
 
 const Revisions: Page = () => (
-  <PageShell page={6} section="Revisions">
+  <PageShell page={8} section="Revisions">
     <Eyebrow>Add and align</Eyebrow>
     <Title>细节设计</Title>
     <Rule />
@@ -766,7 +873,7 @@ const Revisions: Page = () => (
 );
 
 const Camera: Page = () => (
-  <PageShell page={7} section="Camera">
+  <PageShell page={9} section="Camera">
     <Eyebrow>Visual grammar</Eyebrow>
     <Title>三种风格场景</Title>
     <Rule />
@@ -788,7 +895,7 @@ const Camera: Page = () => (
 );
 
 const Sound: Page = () => (
-  <PageShell page={8} section="Sound">
+  <PageShell page={10} section="Sound">
     <Eyebrow>Sound as memory trigger</Eyebrow>
     <Title>声音设计</Title>
     <Rule />
@@ -823,7 +930,7 @@ const Sound: Page = () => (
 );
 
 const Technical: Page = () => (
-  <PageShell page={9} section="AIGC pipeline">
+  <PageShell page={11} section="AIGC pipeline">
     <Eyebrow>Production method</Eyebrow>
     <Title>创作流程</Title>
     <Rule />
@@ -859,7 +966,7 @@ const Technical: Page = () => (
 );
 
 const Schedule: Page = () => (
-  <PageShell page={10} section="Schedule">
+  <PageShell page={12} section="Schedule">
     <Eyebrow>Progress and next steps</Eyebrow>
     <Title>片段扩展规划</Title>
     <Rule />
@@ -898,7 +1005,7 @@ const Schedule: Page = () => (
 );
 
 const Expected: Page = () => (
-  <PageShell page={11} section="Expected outcome">
+  <PageShell page={13} section="Expected outcome">
     <Eyebrow>Final effect</Eyebrow>
     <Title>战争心理线设计</Title>
     <Rule />
@@ -927,7 +1034,7 @@ const Expected: Page = () => (
 );
 
 const ScriptExcerpt: Page = () => (
-  <PageShell page={12} section="Script excerpt" accent={palette.green}>
+  <PageShell page={14} section="Script excerpt" accent={palette.green}>
     <Eyebrow>Selected script scene</Eyebrow>
     <Title>剧本片段：树下回忆</Title>
     <Rule />
@@ -1035,7 +1142,7 @@ const Closing: Page = () => (
       <div style={{ height: 1, width: 520, background: palette.rule, margin: '0 auto 34px' }} />
       <p style={{ fontSize: 38, color: palette.muted, margin: 0 }}>中期汇报完毕 · 谢谢观看</p>
     </div>
-    <Footer page={13} section="Closing" />
+    <Footer page={15} section="Closing" />
   </div>
 );
 
@@ -1044,6 +1151,8 @@ export const notes = [
   '《梦白鸽》想表达的是战争结束后，创伤并不会立刻结束。主人公乔已经回到日常生活，但电视里的战争新闻、打火机、疤痕和白鸽都会触发他的回忆。白鸽在片中既是和平的象征，也是约翰留下的精神连接。',
   '故事采用现实和回忆交叉的结构。现实部分是乔在客厅里的夜晚，回忆部分分为战场牺牲和树下相识两段。我们希望通过冷暖对比，让观众感受到乔内心的撕裂：一边是战争带来的伤痛，一边是他和约翰之间真实存在过的温情。',
   '目前文件夹中的剧本和分镜已经形成了完整雏形，现有视频约一分多钟，主要呈现了核心情绪和视觉方向。中期之后，我们计划保留现有四场结构，但增加过渡、动作细节、人物关系铺垫和声音设计，让故事从片段式表达扩展成更完整的五分钟短片。',
+  '剧本由四场组成：客厅惊醒、战场创伤、树下回忆、现实收束。我们保留了完整的对白和动作描述，在现有的五分钟框架中，每场都有清晰的情绪目标和叙事贡献。',
+  '分镜头表覆盖全部四场，共约 50 个镜头，包含景别、角度、镜头运动和声音设计。前三场沿用传统拍摄，白鸽等关键意象采用 AIGC 生成，确保视觉质量与制作效率的平衡。',
   '扩展方案不是简单拉长镜头，而是补充叙事层次。我们会让现实段落更充分地建立乔的孤独状态；战场段落增加紧张感和动作过程；树下段落强化乔和约翰的关系，让约翰的牺牲更有情感重量。结尾部分则放慢节奏，让白鸽意象成为情绪落点。',
   '我们在整理剧本和分镜时发现，有些细节需要统一，比如打火机到底刻着字母 J 还是白鸽痕迹，乔受伤的是左臂还是右臂。后续会在正式拍摄前完成剧本和分镜修订，保证前后连续性。新增内容主要服务于人物关系和情绪递进。',
   '镜头语言上，我们会让三种时空形成差异。现实部分偏冷、静止、压抑；战场回忆偏晃动、紧张、破碎；树下回忆偏温暖、稳定。这样观众即使不依赖字幕，也能从影像风格上感受到乔在不同心理状态之间切换。',
@@ -1061,6 +1170,8 @@ export default [
   Theme,
   Synopsis,
   CurrentBase,
+  ScriptOverview,
+  StoryboardView,
   FiveMinutes,
   Revisions,
   Camera,
